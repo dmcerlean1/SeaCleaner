@@ -1,0 +1,77 @@
+// valid - example from github
+curl -v localhost:8080 -H 'Content-type:application/json' -d '{
+  "areaSize" : [5, 5],
+  "startingPosition" : [1, 2],
+  "oilPatches" : [
+    [1, 0],
+    [2, 2],
+    [2, 3]
+  ],
+  "navigationInstructions" : "NNESEESWNWW"
+}'
+
+
+// valid - travel diagonally
+curl -v localhost:8080 -H 'Content-type:application/json' -d '{
+  "areaSize" : [5, 5],
+  "startingPosition" : [0, 0],
+  "oilPatches" : [
+    [1, 1],
+    [2, 2],
+    [3, 3]
+  ],
+  "navigationInstructions" : "NENENE"
+}'
+
+// valid - travel along the edge of a rectangle
+curl -v localhost:8080 -H 'Content-type:application/json' -d '{
+  "areaSize" : [3, 4],
+  "startingPosition" : [0, 0],
+  "oilPatches" : [
+    [0, 1],
+    [0, 2],
+    [0, 3],
+    [1, 3],
+    [2, 3],
+    [2, 2],
+    [2, 1]
+  ],
+  "navigationInstructions" : "NNNEESSS"
+}'
+
+// start on an oil patch - should return 1
+curl -v localhost:8080 -H 'Content-type:application/json' -d '{
+  "areaSize" : [3, 4],
+  "startingPosition" : [0, 0],
+  "oilPatches" : [
+    [0, 0]
+  ],
+  "navigationInstructions" : "N"
+}'
+
+
+// negative conditions for every input
+curl -v localhost:8080 -H 'Content-type:application/json' -d '{
+
+  "areaSize" : [5, -1, 3],
+  "startingPosition" : [1, -1, 2],
+  "oilPatches" : [
+    [-1, 0],
+    [2, 2],
+    [2, 3]
+  ],
+  "navigationInstructions" : "NN2EdkdkdlSEESWNWWxkd"
+}'
+
+// out of bounds
+curl -v localhost:8080 -H 'Content-type:application/json' -d '{
+
+  "areaSize" : [2, 2],
+  "startingPosition" : [0, 0],
+  "oilPatches" : [
+    [1, 0],
+    [2, 2],
+    [2, 3]
+  ],
+  "navigationInstructions" : "NNNNN"
+}'
